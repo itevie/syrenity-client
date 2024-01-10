@@ -1,0 +1,17 @@
+:root {
+  --server-bar-width: 64px;
+  --channel-bar-width: 348px;
+  --header-bar-height: 48px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+}
