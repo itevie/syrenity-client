@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import setNoAvatarIcon from "../../util/noAvatarIcon";
 //import { FastAverageColor } from 'fast-average-color';
 import client from "../Client";
-import { User } from "../Syrenity";
+import { User } from "syrenity-api-client";
 import { bound } from "../../util/coordinates";
+import { setExpandedImage } from "../../Components/FullscreenImageViewer";
 
 let updateViewer: (user: User, element: HTMLElement) => void = () => {};
 let hideViewer: () => void;
@@ -52,8 +53,8 @@ export default function UserProfileViewer() {
     }
 
     hideViewer = () => {
-      if (50 - (Date.now() - lastOpen) < 0)
-        setVisbility("none");
+        if (50 - (Date.now() - lastOpen) < 0)
+          setVisbility("none");
     }
   }, []);
 
@@ -63,7 +64,8 @@ export default function UserProfileViewer() {
       <img
         src={currentUser?.avatar || "null"}
         onError={({currentTarget}) => setNoAvatarIcon(currentUser?.id || 0, currentTarget) }
-        alt="" 
+        alt=""
+        onClick={()=>setExpandedImage(currentUser?.avatar || "/images/logos/no-shape-logo.png")}
         className="user-profile-avatar" />
       <div className="user-profile-content">
         <b>{currentUser?.username || "Loading..."}</b>

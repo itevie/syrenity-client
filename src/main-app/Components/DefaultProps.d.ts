@@ -3,7 +3,8 @@ interface DefaultProps {
   tooltipContent?: string;
   tooltipFlyout?: PlacesType | undefined;
   className?: string;
+  style?: {[key: string]: any};
 
-  onClick?: ({ currentTarget }: {currentTarget: EventTarget & HTMLElement}) => void;
+  onClick?: (data: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onContextMenu?: (data: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }

@@ -1,4 +1,4 @@
-import {Channel} from "../Syrenity/index";
+import {Channel} from "syrenity-api-client";
 import LoadChannel from "../UI/ChannelLoader";
 
 interface ChannelBarItemProps {

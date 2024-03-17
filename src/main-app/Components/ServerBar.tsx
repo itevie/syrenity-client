@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import client from "../Client";
-import { Guild } from "../Syrenity";
+import { Guild } from "syrenity-api-client";
 import parseGuildChannelUrl from "../../util/parseGuildChannelUrl";
 
 import ProfilePicture from "../../Components/ProfilePicture";
@@ -9,8 +9,8 @@ import MaterialIcon from "../../Components/MaterialIcon";
 import initialsToAvatar from "../../util/initialsToAvatar";
 import GuildBarUserSection from "./GuildBarUserSection";
 import { loadGuildChannels } from "./ChannelBarContainer";
-import { ContextMenuItem, displayContextMenu } from "../../Components/ContextMenus/ContextMenu";
 import showGuildContextMenu from "./ContextMenus/GuildContextMenu";
+import { useAppSelector } from "../reduxStore";
 
 let urlConsumed = false;
 export let _reloadGuildBar = async () => {};
@@ -18,6 +18,7 @@ export let _reloadGuildBar = async () => {};
 export default function ServerBar() {
   let [guilds, setGuilds] = useState<Guild[]>([]);
   const url = parseGuildChannelUrl(new URL(window.location.href));
+  const members = useAppSelector(state => state.members);
 
   useEffect(() => {
     _reloadGuildBar = async () => {
@@ -42,7 +43,12 @@ export default function ServerBar() {
     <div className="server-bar">
       <div className="guild-list-container">
         {/* The icons */}
-        <GuildBarIcon className="guild-bar-primary" id="guild-bar-dms" tooltipContent="Your DMs" name="/images/logos/no_shape_logo.png"></GuildBarIcon>
+        <GuildBarIcon 
+          className="guild-bar-primary" 
+          id="guild-bar-dms" 
+          tooltipContent="Your DMs" 
+          onClick={() => loadGuildChannels("@me") }
+          name="/images/logos/no_shape_logo.png" />
         <GuildBarIcon id="guild-bar-favourite" tooltipContent="Favourites" name="/images/icons/favourite.png"></GuildBarIcon>
         <GuildBarMaterialIcon id="guild-bar-bookmark" tooltipContent="Bookmarks" name="bookmark"></GuildBarMaterialIcon>
 
@@ -61,7 +67,7 @@ export default function ServerBar() {
             }}
             onContextMenu={data => {
               data.preventDefault();
-              showGuildContextMenu(guild.id, data.currentTarget);
+              showGuildContextMenu(guild.id, members, data);
             }}
             onErrror={target => { target.src = initialsToAvatar(guild.name); }}></ProfilePicture>
           );

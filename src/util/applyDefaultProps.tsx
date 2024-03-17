@@ -17,12 +17,13 @@ export default function applyDefaultProps(
 ): JSX.Element {
   // Combine the props
   let props: {[key: string]: any} = {
-    ...(elementProps || {}), 
-    ...{
-      id: defaultProps.id, 
-      className: defaultProps.className,
-    }
+    ...(defaultProps),
+    ...(elementProps || {}),
   };
+
+  delete props.userId;
+  delete props.tooltipContent;
+  delete props.tooltipFlyout;
 
   if (defaultProps.onClick) props.onClick = defaultProps.onClick;
   if (defaultProps.onContextMenu) props.onContextMenu = defaultProps.onContextMenu;

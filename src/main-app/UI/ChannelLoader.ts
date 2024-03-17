@@ -1,4 +1,4 @@
-import * as Syrenity from "../Syrenity/index";
+import * as Syrenity from "syrenity-api-client";
 import client from "../Client";
 import { modifyUrl } from "../../util/quick";
 import { updateChannel } from "../Components/MainContent";

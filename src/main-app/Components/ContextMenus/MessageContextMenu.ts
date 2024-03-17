@@ -1,8 +1,10 @@
 import { displayContextMenu } from "../../../Components/ContextMenus/ContextMenu";
-import { Message } from "../../Syrenity";
+import { ExtractedMemberData, Message } from "syrenity-api-client";
+import Confirm from "../../../Modals/Confirm";
+import client from "../../Client";
 
-export default function showMessageContextMenu(message: Message, attachTo: HTMLElement) {
-  displayContextMenu({
+export default function showMessageContextMenu(message: Message, member: ExtractedMemberData, attachTo: HTMLElement) {
+  /*displayContextMenu({
     attachTo,
     items: [
       { 
@@ -22,15 +24,21 @@ export default function showMessageContextMenu(message: Message, attachTo: HTMLE
       {
         type: "button",
         name: "Pin Message",
-        icon: "pin"
+        icon: "pin",
       },
       {
         type: "button",
         name: "Delete Message",
         danger: true,
         icon: "delete",
-        click: async () => {
-
+        hidden: message.author.id === client.currentUser.id,
+        click: () => {
+          Confirm({
+            question: "Are you sure you want to delete this message?",
+            confirm: async () => {
+              alert("delete");
+            }
+          });
         }
       },
       { type: "seperator" },
@@ -43,5 +51,5 @@ export default function showMessageContextMenu(message: Message, attachTo: HTMLE
         }
       }
     ]
-  });
+  });*/
 }

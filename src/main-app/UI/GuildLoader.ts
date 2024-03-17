@@ -1,4 +1,4 @@
-import {BaseGuild} from "../Syrenity/index";
+import {BaseGuild} from "syrenity-api-client";
 import client from "../Client";
 
 export default async function LoadGuild(guildId: number) {

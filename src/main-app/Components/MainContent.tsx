@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MaterialIcon from "../../Components/MaterialIcon";
-import * as Syrenity from "../Syrenity/index";
+import * as Syrenity from "syrenity-api-client";
 import ChannelMessagesContainer from "./ChannelContentContainer";
 import InputArea from "./InputArea";
 

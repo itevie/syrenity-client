@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as Syrenity from "../Syrenity/index";
+import { useEffect, useState, useRef } from "react";
+import * as Syrenity from "syrenity-api-client";
 import client from "../Client";
 import UserProfilePicture from "./UserProfilePicture";
 import { extractImageUrls } from "../../util/quick";
@@ -9,15 +9,22 @@ import Markdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
 import Data from "@emoji-mart/data";
 import showMessageContextMenu from "./ContextMenus/MessageContextMenu";
+import { useAppSelector } from "../reduxStore";
+import { displayContextMenu } from "../../Components/ContextMenus/ContextMenu";
+import ShowConfirm from "../../Modals/Confirm";
+import ShowEditMessage, { setEditMessage } from "../modals/EditMessage";
 
 interface MessageProps {
   message: Syrenity.Message;
+  isGrouped: boolean;
 }
 
 export default function Message(props: MessageProps) {
+  const members = useAppSelector(state => state.members);
   const [author, setAuthor] = useState<Syrenity.User>();
   const [attachments, setAttachments] = useState<JSX.Element[]>([]);
   const [content, setContent] = useState<string>(props.message.content);
+  const smallTimestampRef = useRef<HTMLLabelElement>(null);
 
   useEffect(() => {
     (async () => {
@@ -46,10 +53,109 @@ export default function Message(props: MessageProps) {
     })();
   }, [props.message]);
 
-  return <div className="message-container" onContextMenu={(data) => {data.preventDefault();showMessageContextMenu(props.message, data.currentTarget)}}>
-    <UserProfilePicture userId={props.message.author.id} avatar={author?.avatar || "null"} className="base-image message-pfp"></UserProfilePicture>
-    <div className="message-content-container">
-      <div className="message-header">
+  function handleMouseEnter() {
+    // Check if short form is on
+    if (!smallTimestampRef.current) return;
+
+    // Show the timestamp
+    smallTimestampRef.current.innerHTML =
+      props.message.createdAt.toLocaleTimeString(
+        [], {hour: '2-digit', minute:'2-digit'}
+      );
+  }
+
+  function handleMouseLeave() {
+    // Check if short form is on
+    if (!smallTimestampRef.current) return;
+
+    // Hide the timeStamp
+    smallTimestampRef.current.innerHTML = "";
+  }
+
+  async function showContext(data: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    data.preventDefault();
+
+    displayContextMenu({
+      event: data,
+      not: [".message-image"],
+      func: async () => {
+        const guildId = (await props.message.channel.fetch()).guild.id;
+        const member = members[`${guildId}:${client.currentUser.id}`];
+        const canDelete = !member 
+          ? null 
+          : Syrenity.Permissions.bitfieldHasPermission(member.permissionsBitfield, "MANAGE_MESSAGES");
+
+        return [
+          { 
+            type: "button",
+            name: "Copy Text",
+            icon: "copy",
+            click: () => {
+              window.navigator.clipboard.writeText(props.message.content);
+            }
+          },
+          { type: "seperator" },
+          {
+            type: "button",
+            name: "Edit Message",
+            icon: "edit",
+            hidden: props.message.author.id !== client.currentUser.id,
+            click: () => {
+              setEditMessage({
+                message: props.message,
+                onFinish: (contents) => {
+                  if (contents) props.message.edit(contents);
+                }
+              })
+            }
+          },
+          {
+            type: "button",
+            name: "Pin Message",
+            icon: "pin",
+            hidden: !canDelete,
+          },
+          {
+            type: "seperator"
+          },
+          {
+            type: "button",
+            name: "Delete",
+            danger: true,
+            hidden: props.message.author.id !== client.currentUser.id
+              && !(canDelete),
+            click: () => {
+              ShowConfirm({
+                question: `Are you sure you want to delete this message?`,
+                confirm: async () => {
+                  await props.message.delete();
+                }
+              });
+            }
+          }
+        ];
+      }
+    });
+  }
+
+  return <div 
+    className={`message-container ${props.isGrouped ? "message-container-short" : ""}`} 
+    onMouseEnter={handleMouseEnter} 
+    onMouseLeave={handleMouseLeave} 
+    onContextMenu={showContext}>
+    {
+      !props.isGrouped
+      ? <UserProfilePicture
+        userId={props.message.author.id}
+        avatar={author?.avatar || "null"}
+        className="base-image message-pfp" />
+      : <label
+        ref={smallTimestampRef}
+        className="message-short-pfp" />
+    }
+
+    <div className={`message-content-container`}>
+      <div className="message-header" style={{display: !props.isGrouped ? "block" : "none"}}>
         <label className="message-author">
           {author?.username || "Loading..."}
         </label>
@@ -58,7 +164,7 @@ export default function Message(props: MessageProps) {
         </small>
       </div>
 
-      <div className="message-content">
+      <div className={`message-content ${props.isGrouped ? "message-content-short" : ""}`}>
         <Markdown remarkPlugins={[remarkGfm]}>{content.replace(/\n/g, "  \n")}</Markdown>
         <div>
           {attachments}

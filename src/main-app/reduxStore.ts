@@ -1,27 +1,18 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { User } from './Syrenity'
+import { configureStore } from '@reduxjs/toolkit'
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { userSlice } from './stores/users';
+import { settingsSlice } from './stores/settings';
+import { memberSlice } from './stores/member';
 
-const initialState: {[key: number]: User} = {};
-
-const userSlice = createSlice({
-  name: "users",
-  initialState,
-  reducers: {
-    addUser: (state, action: PayloadAction<User>) => {
-      return {
-        ...state,
-        [action.payload.id]: action.payload
-      };
-    } 
-  }
-});
 
 const store = configureStore({
   reducer: {
     users: userSlice.reducer,
+    settings: settingsSlice.reducer,
+    members: memberSlice.reducer,
   },
-})
+});
 
 export type RootUserState = ReturnType<typeof store.getState>;
-export const {addUser} = userSlice.actions; 
 export default store;
+export const useAppSelector: TypedUseSelectorHook<RootUserState> = useSelector

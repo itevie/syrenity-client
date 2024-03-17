@@ -13,7 +13,9 @@ import "./styles/modals.css";
 import "./styles/single-modal-page.css";
 import "./styles/image-expander.css";
 import "./styles/context-menu.css";
+import "./styles/pages.css";
 import Login from './Routes/Login';
+import Invite from "./Routes/Invite";
 import ModalManager from './Components/ModalManager';
 import FullscreenImageViewer from './Components/FullscreenImageViewer';
 import ContextMenu from './Components/ContextMenus/ContextMenu';
@@ -39,6 +41,12 @@ const router = createBrowserRouter([
   {
     "path": "/login",
     element: <Login></Login>
+  },
+
+  // Invites
+  {
+    path: "/invites/:code",
+    element: <Invite />
   },
 
   // Others

@@ -6,6 +6,8 @@ import ShowError from "../../Modals/Error";
 import EmojiPicker from "@emoji-mart/react";
 import Data from "@emoji-mart/data";
 import MaterialIcon from "../../Components/MaterialIcon";
+import { getLatestByUser } from "./ChannelContent";
+import { setEditMessage } from "../modals/EditMessage";
 
 const logger = new Logger("input-manager");
 
@@ -84,6 +86,9 @@ async function handlKeyPress(data: React.KeyboardEvent<HTMLTextAreaElement>): Pr
     return;
   const draft = drafts.get(selectedChannel?.id || NaN) as unknown as InputDraft;
 
+  // Check if there is no need
+  if (data.key === "Enter" && data.shiftKey === false && draft.content === "") return;
+
   // Check if it is enter
   if (data.key === "Enter" && data.shiftKey === false && selectedChannel !== null) {
     data.currentTarget.value = "";
@@ -98,6 +103,20 @@ async function handlKeyPress(data: React.KeyboardEvent<HTMLTextAreaElement>): Pr
     }
 
     return;
+  }
+
+  // Check if it is up arrow to edit and the draft is empty
+  else if (data.key === "ArrowUp" && draft.content === "" && selectedChannel) {
+    const message = getLatestByUser[selectedChannel.id]();
+    console.log(message);
+    if (message) {
+      setEditMessage({
+        message: message,
+        onFinish: (contents) => {
+          if (contents) message.edit(contents);
+        }
+      })
+    }
   }
 
   // Otherwise just update the draft

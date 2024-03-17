@@ -3,7 +3,9 @@ import MaterialIcon from "../MaterialIcon";
 
 // ----- Context menu datas -----
 interface ContextMenuDataBase {
-  attachTo: HTMLElement | null;
+  attachTo?: HTMLElement | null;
+  not?: string[];
+  event: React.MouseEvent<HTMLElement, MouseEvent> | null;
 }
 
 export interface ContextMenuData extends ContextMenuDataBase {
@@ -37,9 +39,9 @@ interface ContextMenuButton extends ContextMenuItemBase {
 }
 
 // ----- Callbacks -----
-interface ContextMenuCallback {
+/*interface ContextMenuCallback {
   close: () => void;
-}
+}*/
 
 const iconMap: {[key: string]: string} = {
   link: "open_in_new",
@@ -55,10 +57,15 @@ let lastShown = 0;
 
 export default function ContextMenu() {
   const [positiion, setPositiion] = useState<{ x: number, y: number, display: boolean, loading?: boolean }>({ x: 0, y: 0, display: false });
-  const [data, setData] = useState<ContextMenuData>({ items: [ ], attachTo: null, });
+  const [data, setData] = useState<ContextMenuData>({ items: [ ], event: null, });
 
   useEffect(() => {
     _showMenu = data => {
+      // Check if shouldn't show
+      for (const s of (data as any)?.not || [])
+        if ((data.event?.target as HTMLDivElement).matches(s))
+          return;
+
       // Check if async
       if ("func" in data) {
         (async () => {
@@ -67,10 +74,10 @@ export default function ContextMenu() {
           _showMenu({ ...data,  items: resolved } as ContextMenuData);
         })();
 
-        const rect = (data.attachTo as HTMLElement).getBoundingClientRect();
+        //const rect = (data.attachTo as HTMLElement).getBoundingClientRect();
         setPositiion({
-          x: rect.x + (rect.width / 2),
-          y: rect.y + (rect.height / 2),
+          x: data.event?.pageX || 0,
+          y: data.event?.pageY || 0,
           display: true,
           loading: true,
         });
@@ -101,17 +108,21 @@ export default function ContextMenu() {
         previousType = item.type;
         actualData.push(item);
       }
+      
+      // Check if the last item is a seperator
+      if (actualData[actualData.length - 1].type === "seperator")
+        actualData.pop();
 
       setData({
         ...data,
         items: actualData,
       });
 
-      const rect = (data.attachTo as HTMLElement).getBoundingClientRect();
       setPositiion({
-        x: rect.x + (rect.width / 2),
-        y: rect.y + (rect.height / 2),
+        x: data.event?.pageX || 0,
+        y: data.event?.pageY || 0,
         display: true,
+        loading: false,
       });
 
       lastShown = Date.now();

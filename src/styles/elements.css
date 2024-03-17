@@ -89,3 +89,38 @@ button:not(.epr-btn), input:not(.epr-btn), textarea {
   outline: none;
   transition: 0.1s;
 }
+
+
+/* lined-text stolen from https://stackoverflow.com/a/14731123/20022509 */
+.lined-text {
+  display: block;
+  overflow: hidden;
+  color: var(--color-error);
+  text-align: center;
+}
+
+.lined-text.danger::before,
+.lined-text.danger::after {
+  background-color: var(--color-error);
+}
+
+.lined-text::before,
+.lined-text::after {
+  background-color: white;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.lined-text::before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.lined-text::after {
+  left: 0.5em;
+  margin-right: -50%;
+}
