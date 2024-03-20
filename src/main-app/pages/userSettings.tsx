@@ -14,8 +14,9 @@ import PageClose from "../../Components/PageClose";
 import { useDispatch } from "react-redux";
 import { setKey } from "../stores/settings";
 import { DangerLinedText } from "../../Components/LinedText";
-import axios from "axios";
-import ShowError from "../../Modals/Error";
+import UploadImage from "../../Modals/UploadImage";
+import { addUser } from "../stores/users";
+import PleaseWait from "../../Modals/PleaseWait";
 
 export default function UserSettings() {
   const [selectedSection, setSelectedSection] = useState<string | null>("my_account");
@@ -44,6 +45,22 @@ export default function UserSettings() {
     });
   }
 
+  async function changeProfilePicture() {
+    UploadImage({
+      message: "Click the icon above to change your profile picture!",
+      oldImage: (await client.user(client.currentUser.id).fetch()).avatar || "",
+      onUpload: data => {
+        let waiter = PleaseWait();
+        client.currentUser.updateAvatar(data).then(async (d) => {
+          // Refresh current user
+          console.log(d);
+          dispatch(addUser(d.extractData()));
+          waiter.close();
+        });
+      }
+    });
+  }
+
   return(
     <PageContainer>
       <Page>
@@ -59,7 +76,7 @@ export default function UserSettings() {
           <PageSection selected={selectedSection === "my_account"}>
             <h1>My Account</h1>
             <SideBySide type="left">
-              <UserProfilePicture onClick={() => {}} userId={client.currentUser.id} avatar={users[client.currentUser.id].avatar || ""}></UserProfilePicture>
+              <UserProfilePicture onClickOverride={changeProfilePicture} userId={client.currentUser.id} avatar={users[client.currentUser.id].avatar || ""}></UserProfilePicture>
               <VerticalCenter>
                 <label>{users[client.currentUser.id].username}</label>
               </VerticalCenter>

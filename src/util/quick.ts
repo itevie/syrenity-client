@@ -12,6 +12,12 @@ export function enable(element: HTMLElement | null): void {
 
 export function getUrl(): string {
   const url = new URL(window.location.href);
+
+  console.log(url);
+  if (url.port === "3001" && url.hostname === "localhost") {
+    return "http://localhost:3000";
+  }
+
   return `${url.protocol}//${url.host}`;
 }
 
@@ -43,4 +49,14 @@ export function extractImageUrls(contents: string): string[] {
 export function seededRandom(seed: number): number {
   let x = Math.sin(seed++) * 10000;
   return x - Math.floor(x);
+}
+
+export function arrayBufferToBase64(buffer: ArrayBuffer) {
+  var binary = '';
+  var bytes = new Uint8Array( buffer );
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode( bytes[ i ] );
+  }
+  return window.btoa( binary );
 }

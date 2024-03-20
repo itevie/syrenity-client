@@ -53,8 +53,8 @@ export default function UserProfileViewer() {
     }
 
     hideViewer = () => {
-        if (50 - (Date.now() - lastOpen) < 0)
-          setVisbility("none");
+      if (50 - (Date.now() - lastOpen) < 0)
+        setVisbility("none");
     }
   }, []);
 
@@ -78,7 +78,8 @@ export default function UserProfileViewer() {
 }
 
 export async function showForUser(userId: number, element: HTMLElement) {
-  const user = await client.user(userId).fetch();
+  const user = await client.user(userId).fetch(true);
+  console.log(user);
   updateViewer(user, element);
 }
 

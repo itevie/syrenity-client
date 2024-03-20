@@ -1,7 +1,4 @@
-import { closeModal, showModal } from "../../Components/ModalManager";
 import Modal from "../../Components/Modal";
-import ImageIcon from "../../Components/ImageIcon";
-import ModalHeader from "../../Components/ModalHeader";
 import SideBySide from "../../Components/SideBySide";
 import { Message as SyrenityMessage} from "syrenity-api-client";
 import Message from "../Components/Message";

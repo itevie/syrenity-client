@@ -19,6 +19,7 @@ import Invite from "./Routes/Invite";
 import ModalManager from './Components/ModalManager';
 import FullscreenImageViewer from './Components/FullscreenImageViewer';
 import ContextMenu from './Components/ContextMenus/ContextMenu';
+import Register from './Routes/Register';
 
 const initialUrl = window.location.href;
 
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
   {
     "path": "/login",
     element: <Login></Login>
+  },
+
+  {
+    "path": "/register",
+    element: <Register></Register>
   },
 
   // Invites

@@ -20,11 +20,17 @@ client.on("messageCreate", message => {
   loadMessage(message);
 });
 
-let alreadyTried = false
+let alreadyTried = false;
+
+(window as any).createServer = async () => {
+  let data = await client.guilds.create("Syrenity Official");
+  console.log(await data.createInvite());
+}
 
 export async function startClient() {
   if (alreadyTried) return;
   alreadyTried = true;
+
   try {
     client.login(await getToken());
   } catch (err) {
@@ -40,14 +46,12 @@ export async function startClientWithoutWebsockets() {
 
 export async function getToken() {
   let testingToken = localStorage.getItem("testing-token");
-
   if (isDev && testingToken) {
     return testingToken;
   }
 
   // Check if logged in
   let isLoggedIn = await client.isLoggedIn();
-
   // Check what to do
   if (isLoggedIn === false) {
     // Redirect to /login

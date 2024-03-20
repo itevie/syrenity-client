@@ -19,7 +19,6 @@ export default function Login() {
 
     const email = emailRef.current?.value as string;
     const password = passwordRef.current?.value as string;
-    console.log(getUrl());
     axios.post(getUrl() + "/auth/password", {
       username: email,
       password,

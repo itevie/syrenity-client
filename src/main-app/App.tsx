@@ -16,7 +16,6 @@ import { addUser } from './stores/users';
 import { addMember } from './stores/member';
 import { onEvent } from './Components/ChannelContent';
 import EditMessageModal from './modals/EditMessage';
-import GuildSettings from './pages/guildSettings';
 
 function AppContainer() {
   document.addEventListener("click", () => {
