@@ -1,0 +1,118 @@
+.profile-picture {
+    width: 64px;
+    height: 64px;
+}
+
+.base-image {
+    width: 50px;
+    height: 50px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+    border-radius: 100px;
+    background-color: var(--color-background);
+}
+
+/* lined-text stolen from https://stackoverflow.com/a/14731123/20022509 */
+.lined-text {
+    display: block;
+    overflow: hidden;
+    color: var(--color-error);
+    text-align: center;
+}
+
+.lined-text.danger::before,
+.lined-text.danger::after {
+    background-color: var(--color-error);
+}
+
+.lined-text::before,
+.lined-text::after {
+    background-color: white;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+}
+
+.lined-text::before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+.lined-text::after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+textarea {
+    outline: none;
+    transition: 0.1s;
+
+    margin: 0;
+    padding: 10px 30px;
+    margin-bottom: 5px;
+
+    border-radius: 10px;
+    border-style: none;
+    border-width: 3px;
+}
+
+.comp-input {
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+}
+
+.comp-input-label {
+    text-align: left;
+}
+
+.button,
+input {
+    background-color: var(--color-input-primary);
+    color: var(--color-input-text);
+
+    outline: none;
+    box-sizing: border-box;
+
+    border-style: none;
+    border-radius: 7px;
+    padding: 5px 10px;
+    transition: 0.2s;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.button:hover,
+input:hover {
+    background-color: var(--color-input-hover);
+    color: var(--color-input-text-hover);
+    border-bottom-color: var(--color-accent-primary);
+}
+
+.button:active {
+    transition: 0.1s;
+    background-color: var(--color-input-selected);
+    color: var(--color-input-text-selected);
+}
+
+iframe {
+    display: none;
+}
+
+.jumbo {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}
+
+a {
+    color: var(--color-accent-primary)
+}

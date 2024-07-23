@@ -1,0 +1,29 @@
+.input-area {
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+.input-area-content {
+    background-color: var(--color-input-area-background);
+
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    padding: 10px;
+    margin: 10px;
+    margin-top: 0px;
+
+    width: 100%;
+
+    display: flex;
+    gap: 10px;
+}
+
+.input-area-content-input {
+    flex: 1;
+    box-sizing: border-box;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: var(--color-input-textarea-background);
+    color: var(--color-input-textarea-color)
+}

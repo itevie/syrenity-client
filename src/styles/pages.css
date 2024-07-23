@@ -1,0 +1,94 @@
+.page-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 100;
+
+    color: white;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-main-content);
+}
+
+.tabbed-page-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+}
+
+.tabbed-page-tabs {
+    width: 300px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 10px;
+
+    background-color: var(--color-side-bar);
+}
+
+.tabbed-page-tab-item {
+    font-size: 1em;
+
+    padding: 10px;
+
+    border-radius: 10px;
+}
+
+.tabbed-page-tab-item:hover {
+    background-color: var(--color-side-bar-item-hover);
+}
+
+.tabbed-page-tabs-header {
+    font-size: 0.8em;
+    color: var(--color-text-secondary);
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.tabbed-page-contents {
+    margin: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.page-close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 30px;
+}
+
+.page-close-button:hover {
+    cursor: pointer;
+}
+
+.page-setting-container {
+    background-color: var(--color-container);
+
+    padding: 20px;
+    margin: 10px;
+
+    box-sizing: border-box;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 10px;
+}
+
+.page-setting-container-clickable:hover {
+    background-color: var(--color-container-hover);
+}

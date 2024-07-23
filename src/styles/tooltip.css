@@ -1,0 +1,13 @@
+.tooltip {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    margin: 10px;
+    padding: 10px 5px;
+    border-radius: 10px;
+
+    background-color: var(--color-tooltip-background);
+    color: var(--color-tooltip-content);
+}

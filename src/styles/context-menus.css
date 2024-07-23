@@ -1,0 +1,38 @@
+.ctxm-container {
+    position: absolute;
+    display: block;
+
+    background-color: var(--color-popup-background);
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    top: 0;
+    left: 0;
+
+    margin: 10px;
+}
+
+.ctxm-item {
+    padding: 10px 10px;
+    margin: 5px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 5px;
+}
+
+.ctxm-item>img {
+    width: 20px;
+    height: 20px;
+}
+
+.ctxm-item:hover {
+    cursor: pointer;
+    background-color: var(--color-popup-hover);
+}
+
+.ctxm-item-danger {
+    color: red;
+}

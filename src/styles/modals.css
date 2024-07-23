@@ -1,0 +1,47 @@
+.modal-container {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 1000;
+
+    background-color: var(--color-modal-backdrop);
+}
+
+.modal {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    min-width: 300px;
+    min-height: 100px;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    background-color: var(--color-modal-background);
+}
+
+.big-modal {
+    min-width: 500px;
+}
+
+.modal-header-icon {
+    height: 100px;
+
+    display: block;
+
+    margin: 20px;
+    margin-top: 0;
+}
+
+.modal-content {
+    text-align: center;
+    margin-bottom: 20px;
+}

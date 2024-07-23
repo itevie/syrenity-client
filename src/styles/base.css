@@ -1,0 +1,141 @@
+:root {
+    /* 
+        Variables: COLORS
+    */
+
+    --font-family: Arial, Helvetica, sans-serif;
+
+    /* ----- Text ----- */
+    --color-text-primary: #fff;
+    --color-text-secondary: rgba(255, 255, 255, 0.7);
+    --color-text-disabled: rgba(255, 255, 255, 0.5);
+
+    /* ----- Backgrounds ----- */
+    --color-background: #111;
+    --color-container: rgba(32, 32, 32, 0.7);
+    --color-container-hover: rgba(32, 32, 32, 1);
+
+    /* ----- Inputs ----- */
+    --color-input-primary: rgba(255, 255, 255);
+    --color-input-hover: rgba(255, 255, 255, 0.7);
+    --color-input-selected: rgba(255, 255, 255, 0.25);
+
+    --color-input-text: black;
+    --color-input-text-hover: #222;
+    --color-input-text-selected: white;
+
+    /* ----- Accent ----- */
+    --color-accent-primary: red;
+
+    /* ----- Tooltip Colors ----- */
+    --color-tooltip-background: #333;
+    --color-tooltip-content: white;
+
+    /* ----- MainApp Colors ----- */
+    --color-server-bar: #111;
+    --color-main-content: #2e2f33;
+    --color-side-bar: #212122;
+    --color-side-bar-item: #333;
+    --color-side-bar-item-hover: #444;
+
+    /* ----- Modal Data ----- */
+    --color-modal-backdrop: rgba(0, 0, 0, 0.5);
+    --color-modal-background: #222;
+
+    /* ----- Input Area ----- */
+    --color-input-area-background: #202020;
+    --color-input-textarea-background: inherit;
+    --color-input-textarea-color: white;
+
+    /* ----- Popups ----- */
+    --color-popup-background: #111;
+    --color-popup-hover: #333;
+
+    /* 
+        Variables: OTHER
+    */
+
+    /* ----- Sizings ----- */
+    --server-bar-width: 50px;
+    --channel-bar-width: 348px;
+    --header-bar-height: 48px;
+}
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: var(--font-family);
+    color: white;
+    background-color: var(--color-background);
+}
+
+.container {
+    background-color: var(--color-container);
+    padding: 10px;
+}
+
+
+
+
+.page-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.svg-icon {
+    width: 32px;
+    height: 32px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        transform: scale(1.2);
+        opacity: 50%;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 100%;
+    }
+}
+
+.fade-out {
+    animation: fade-out 0.2s forwards;
+}
+
+.fade-out-reverse {
+    animation: fade-out 0.2s reverse;
+}
+
+.fade-in {
+    animation: fade-in 0.2s forwards;
+}
+
+.fade-in-reverse {
+    animation: fade-in 0.2s reverse;
+}
+
+@keyframes fade-out {
+    0% {
+        transform: scale(1);
+        opacity: 100%;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 50%;
+    }
+}

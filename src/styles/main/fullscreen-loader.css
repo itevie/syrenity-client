@@ -1,0 +1,23 @@
+.fullscreen-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 100;
+}
+
+.fullscreen-loader-content {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fullscreen-loader-image {
+    width: 200px;
+    height: 200px;
+    animation: rotate 1s linear infinite;
+}
